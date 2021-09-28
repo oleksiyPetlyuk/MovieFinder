@@ -13,6 +13,8 @@ class MoviesViewController: UIViewController {
   
   lazy var searchBar = UISearchBar()
   
+  lazy var activityIndicator = UIActivityIndicatorView(style: .medium)
+  
   var networkClient: MovieFinderService = MovieFinderClient.shared
   
   var imageClient: ImageService = ImageClient.shared
@@ -28,6 +30,7 @@ class MoviesViewController: UIViewController {
     tableView.dataSource = self
     
     setupSearchBar()
+    setupActivityIndicator()
   }
   
   private func setupSearchBar() {
@@ -38,6 +41,11 @@ class MoviesViewController: UIViewController {
     searchBar.backgroundImage = UIImage()
     searchBar.delegate = self
     navigationItem.titleView = searchBar
+  }
+  
+  private func setupActivityIndicator() {
+    activityIndicator.center = view.center
+    view.addSubview(activityIndicator)
   }
   
   private func showAlert(message: String = "Something went wrong") {
@@ -52,8 +60,12 @@ class MoviesViewController: UIViewController {
     guard dataTask == nil else { return }
     
     do {
+      activityIndicator.startAnimating()
+      
       dataTask = try networkClient.getMovies(title: title) { movies, error in
         guard error == nil else {
+          self.activityIndicator.stopAnimating()
+          
           self.showAlert(message: String(describing: error!))
           
           return
@@ -62,8 +74,10 @@ class MoviesViewController: UIViewController {
         self.dataTask = nil
         self.viewModels = movies?.map { MovieViewModel(movie: $0) } ?? []
         self.tableView.reloadData()
+        self.activityIndicator.stopAnimating()
       }
     } catch {
+      activityIndicator.stopAnimating()
       showAlert(message: String(describing: error))
     }
   }
