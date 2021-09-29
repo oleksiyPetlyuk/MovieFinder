@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		FA1B6AF62703209100920346 /* OptionalObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B6AF52703209100920346 /* OptionalObject.swift */; };
+		FA1B6AF827036C2200920346 /* Constructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B6AF727036C2200920346 /* Constructor.swift */; };
+		FA1B6AFA2704ABD100920346 /* movies.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1B6AF92704ABD100920346 /* movies.json */; };
+		FA1B6AFD2704B06C00920346 /* URLSessionDataTaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B6AFC2704B06C00920346 /* URLSessionDataTaskProtocol.swift */; };
+		FA1B6AFF2704B0B000920346 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B6AFE2704B0B000920346 /* URLSessionProtocol.swift */; };
+		FA1B6B022704B1C900920346 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B6B012704B1C900920346 /* MockDataTask.swift */; };
+		FA1B6B042704B1FC00920346 /* MockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1B6B032704B1FC00920346 /* MockSession.swift */; };
 		FA73720026FCC0E700052946 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7371FF26FCC0E700052946 /* AppDelegate.swift */; };
 		FA73720226FCC0E700052946 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA73720126FCC0E700052946 /* SceneDelegate.swift */; };
 		FA73720726FCC0E700052946 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA73720526FCC0E700052946 /* Main.storyboard */; };
@@ -44,6 +50,12 @@
 
 /* Begin PBXFileReference section */
 		FA1B6AF52703209100920346 /* OptionalObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalObject.swift; sourceTree = "<group>"; };
+		FA1B6AF727036C2200920346 /* Constructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constructor.swift; sourceTree = "<group>"; };
+		FA1B6AF92704ABD100920346 /* movies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movies.json; sourceTree = "<group>"; };
+		FA1B6AFC2704B06C00920346 /* URLSessionDataTaskProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskProtocol.swift; sourceTree = "<group>"; };
+		FA1B6AFE2704B0B000920346 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		FA1B6B012704B1C900920346 /* MockDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
+		FA1B6B032704B1FC00920346 /* MockSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSession.swift; sourceTree = "<group>"; };
 		FA7371FC26FCC0E700052946 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7371FF26FCC0E700052946 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA73720126FCC0E700052946 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +110,24 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		FA1B6B002704B1BA00920346 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B6B012704B1C900920346 /* MockDataTask.swift */,
+				FA1B6B032704B1FC00920346 /* MockSession.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		FA1B6B052704C3F900920346 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				FA1B6AFC2704B06C00920346 /* URLSessionDataTaskProtocol.swift */,
+				FA1B6AFE2704B0B000920346 /* URLSessionProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		FA7371F326FCC0E700052946 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +151,7 @@
 		FA7371FE26FCC0E700052946 /* MovieFinder */ = {
 			isa = PBXGroup;
 			children = (
+				FA1B6B052704C3F900920346 /* Protocols */,
 				FA1B6AF42703207700920346 /* Utils */,
 				FA73724226FDEA7300052946 /* Networking */,
 				FA73723F26FDE8DA00052946 /* ViewModels */,
@@ -141,7 +172,10 @@
 		FA73721526FCC0ED00052946 /* MovieFinderTests */ = {
 			isa = PBXGroup;
 			children = (
+				FA1B6B002704B1BA00920346 /* Mocks */,
 				FA73721626FCC0ED00052946 /* MovieFinderTests.swift */,
+				FA1B6AF727036C2200920346 /* Constructor.swift */,
+				FA1B6AF92704ABD100920346 /* movies.json */,
 			);
 			path = MovieFinderTests;
 			sourceTree = "<group>";
@@ -326,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1B6AFA2704ABD100920346 /* movies.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1B6AFF2704B0B000920346 /* URLSessionProtocol.swift in Sources */,
 				FA1B6AF62703209100920346 /* OptionalObject.swift in Sources */,
 				FA73723A26FDE69A00052946 /* UITableViewCell+Identifier.swift in Sources */,
 				FA73724426FDEAB500052946 /* MovieFinderClient.swift in Sources */,
@@ -352,6 +388,7 @@
 				FA73723426FDBA7400052946 /* MovieTableViewCell.swift in Sources */,
 				FA73724626FE037E00052946 /* ImageClient.swift in Sources */,
 				FA73724126FDE8F700052946 /* MovieViewModel.swift in Sources */,
+				FA1B6AFD2704B06C00920346 /* URLSessionDataTaskProtocol.swift in Sources */,
 				FA73720226FCC0E700052946 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,6 +397,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1B6AF827036C2200920346 /* Constructor.swift in Sources */,
+				FA1B6B022704B1C900920346 /* MockDataTask.swift in Sources */,
+				FA1B6B042704B1FC00920346 /* MockSession.swift in Sources */,
 				FA73721726FCC0ED00052946 /* MovieFinderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

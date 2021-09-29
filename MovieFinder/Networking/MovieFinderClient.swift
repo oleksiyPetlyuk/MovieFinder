@@ -17,18 +17,19 @@ enum NetworkError: Error {
 }
 
 protocol MovieFinderService {
-  func getMovies(title: String, completion: @escaping ([Movie]?, Error?) -> Void) throws -> URLSessionDataTask
+  func getMovies(title: String, completion: @escaping ([Movie]?, Error?) -> Void) throws -> URLSessionDataTaskProtocol
 }
 
 class MovieFinderClient {
   
   let baseURL: URL
-  let session: URLSession
+  let session: URLSessionProtocol
   let responseQueue: DispatchQueue?
+  var apiKeys = (host: "imdb8.p.rapidapi.com", key: "c2c68d7704mshcde4a8424a2e81ap19db6ajsn042508dbd217")
   
-  static let shared = MovieFinderClient(baseURL: URL(string: "https://imdb8.p.rapidapi.com/title/find")!, session: .shared, responseQueue: .main)
+  static let shared = MovieFinderClient(baseURL: URL(string: "https://imdb8.p.rapidapi.com/title/find")!, session: URLSession.shared, responseQueue: .main)
   
-  init(baseURL: URL, session: URLSession, responseQueue: DispatchQueue?) {
+  init(baseURL: URL, session: URLSessionProtocol, responseQueue: DispatchQueue?) {
     self.baseURL = baseURL
     self.session = session
     self.responseQueue = responseQueue
@@ -36,7 +37,7 @@ class MovieFinderClient {
 }
 
 extension MovieFinderClient: MovieFinderService {
-  func getMovies(title: String, completion: @escaping ([Movie]?, Error?) -> Void) throws -> URLSessionDataTask {
+  func getMovies(title: String, completion: @escaping ([Movie]?, Error?) -> Void) throws -> URLSessionDataTaskProtocol {
     guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else {
       throw NetworkError.invalidRequestUrl
     }
@@ -54,8 +55,8 @@ extension MovieFinderClient: MovieFinderService {
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     request.allHTTPHeaderFields = [
-      "x-rapidapi-host": "imdb8.p.rapidapi.com",
-      "x-rapidapi-key": "c2c68d7704mshcde4a8424a2e81ap19db6ajsn042508dbd217"
+      "x-rapidapi-host": apiKeys.host,
+      "x-rapidapi-key": apiKeys.key,
     ]
     
     let task = session.dataTask(with: request) { [weak self] data, response, error in

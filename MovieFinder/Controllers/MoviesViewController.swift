@@ -11,9 +11,17 @@ class MoviesViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   
-  lazy var searchBar = UISearchBar()
+  lazy var searchBar = UISearchBar() {
+    didSet {
+      searchBar.accessibilityIdentifier = "searchBar"
+    }
+  }
   
-  lazy var activityIndicator = UIActivityIndicatorView(style: .medium)
+  lazy var activityIndicator = UIActivityIndicatorView(style: .medium) {
+    didSet {
+      activityIndicator.accessibilityIdentifier = "activityIndicator"
+    }
+  }
   
   var networkClient: MovieFinderService = MovieFinderClient.shared
   
@@ -21,7 +29,7 @@ class MoviesViewController: UIViewController {
   
   var viewModels: [MovieViewModel] = []
   
-  var dataTask: URLSessionDataTask?
+  var dataTask: URLSessionDataTaskProtocol?
   
   override func viewDidLoad() {
     super.viewDidLoad()
