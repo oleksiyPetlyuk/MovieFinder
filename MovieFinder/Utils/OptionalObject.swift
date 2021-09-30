@@ -9,7 +9,7 @@ import Foundation
 
 struct OptionalObject<T: Decodable>: Decodable {
   let value: T?
-  
+
   init(from decoder: Decoder) throws {
     do {
       let container = try decoder.singleValueContainer()

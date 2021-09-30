@@ -8,7 +8,7 @@
 import UIKit
 
 class MovieTableViewCell: UITableViewCell {
-  
+
   @IBOutlet weak var movieImageView: UIImageView!
   @IBOutlet weak var titleLabel: UILabel!
 }

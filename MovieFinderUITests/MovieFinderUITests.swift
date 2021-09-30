@@ -8,34 +8,34 @@
 import XCTest
 
 class MovieFinderUITests: XCTestCase {
-  
+
   var app: XCUIApplication!
-  
+
   override func setUpWithError() throws {
     app = .init()
     app.launch()
-    
+
     continueAfterFailure = false
   }
-  
+
   func test_findMovies() throws {
     let searchField = app.navigationBars["Movies"].searchFields.firstMatch
     let activityIndicator = app.activityIndicators.firstMatch
     let searchText = "Harry Potter and the Sorcerer's Stone"
-    
+
     XCTAssertFalse(activityIndicator.exists)
-    
+
     searchField.tap()
     searchField.typeText(searchText)
-    
-    app/*@START_MENU_TOKEN@*/.buttons["Search"]/*[[".keyboards",".buttons[\"search\"]",".buttons[\"Search\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
-    
+
+    app.buttons["Search"].tap()
+
     XCTAssert(activityIndicator.exists)
-    
+
     expectation(for: NSPredicate(format: "exists == 0"), evaluatedWith: activityIndicator)
-    
+
     waitForExpectations(timeout: 10)
-    
+
     let firstCell = app.staticTexts["Movie.Title"].firstMatch
     XCTAssertEqual(firstCell.label, searchText)
   }
