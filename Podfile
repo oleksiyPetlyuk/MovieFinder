@@ -7,6 +7,7 @@ target 'MovieFinder' do
 
   # Pods for MovieFinder
   pod 'SwiftLint'
+  pod 'Alamofire', '~> 5.4'
 
   target 'MovieFinderTests' do
     inherit! :search_paths

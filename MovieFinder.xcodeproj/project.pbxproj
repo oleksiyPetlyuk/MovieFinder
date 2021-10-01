@@ -35,6 +35,8 @@
 		FAB75D822705F9890050C40E /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB75D812705F9890050C40E /* URLSessionHTTPClient.swift */; };
 		FAB75D842705FAF80050C40E /* HTTPClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB75D832705FAF80050C40E /* HTTPClientProtocol.swift */; };
 		FAB75D88270730390050C40E /* movies_not_found.json in Resources */ = {isa = PBXBuildFile; fileRef = FAB75D87270730390050C40E /* movies_not_found.json */; };
+		FAB75D8A270740D30050C40E /* AlamofireHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB75D89270740D30050C40E /* AlamofireHTTPClient.swift */; };
+		FAB75D8C270750C20050C40E /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FAB75D8B270750C20050C40E /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		FAB75D812705F9890050C40E /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		FAB75D832705FAF80050C40E /* HTTPClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientProtocol.swift; sourceTree = "<group>"; };
 		FAB75D87270730390050C40E /* movies_not_found.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movies_not_found.json; sourceTree = "<group>"; };
+		FAB75D89270740D30050C40E /* AlamofireHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireHTTPClient.swift; sourceTree = "<group>"; };
+		FAB75D8B270750C20050C40E /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,7 @@
 		FA7371F326FCC0E700052946 = {
 			isa = PBXGroup;
 			children = (
+				FAB75D8B270750C20050C40E /* .swiftlint.yml */,
 				FA7371FE26FCC0E700052946 /* MovieFinder */,
 				FA73721526FCC0ED00052946 /* MovieFinderTests */,
 				FA73721F26FCC0ED00052946 /* MovieFinderUITests */,
@@ -290,6 +295,7 @@
 				FA1B6AF52703209100920346 /* OptionalObject.swift */,
 				FAB75D7F2705F2940050C40E /* Secrets.swift */,
 				FAB75D812705F9890050C40E /* URLSessionHTTPClient.swift */,
+				FAB75D89270740D30050C40E /* AlamofireHTTPClient.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 				FA7371F926FCC0E700052946 /* Frameworks */,
 				FA7371FA26FCC0E700052946 /* Resources */,
 				FAB75D7D2705CEE80050C40E /* Run Script */,
+				1E48250705C201A856913FB1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -352,6 +359,7 @@
 				FA73721826FCC0ED00052946 /* Sources */,
 				FA73721926FCC0ED00052946 /* Frameworks */,
 				FA73721A26FCC0ED00052946 /* Resources */,
+				6095CB3158D990CDC6748BB3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -411,6 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB75D8C270750C20050C40E /* .swiftlint.yml in Resources */,
 				FA73720C26FCC0EC00052946 /* LaunchScreen.storyboard in Resources */,
 				FA73720926FCC0EC00052946 /* Assets.xcassets in Resources */,
 				FA73720726FCC0E700052946 /* Main.storyboard in Resources */,
@@ -436,6 +445,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1E48250705C201A856913FB1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieFinder/Pods-MovieFinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieFinder/Pods-MovieFinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MovieFinder/Pods-MovieFinder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		44B5C8CEAA00C137C1D653E3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -456,6 +482,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6095CB3158D990CDC6748BB3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieFinder-MovieFinderUITests/Pods-MovieFinder-MovieFinderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieFinder-MovieFinderUITests/Pods-MovieFinder-MovieFinderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MovieFinder-MovieFinderUITests/Pods-MovieFinder-MovieFinderUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D1CAC01FAC896C4CA1EF9CDC /* [CP] Check Pods Manifest.lock */ = {
@@ -530,6 +573,7 @@
 				FA1B6AFF2704B0B000920346 /* URLSessionProtocol.swift in Sources */,
 				FA1B6AF62703209100920346 /* OptionalObject.swift in Sources */,
 				FA73723A26FDE69A00052946 /* UITableViewCell+Identifier.swift in Sources */,
+				FAB75D8A270740D30050C40E /* AlamofireHTTPClient.swift in Sources */,
 				FA73724426FDEAB500052946 /* MovieFinderClient.swift in Sources */,
 				FA73723726FDE50600052946 /* MoviesViewController.swift in Sources */,
 				FA73723E26FDE7E500052946 /* Movie.swift in Sources */,

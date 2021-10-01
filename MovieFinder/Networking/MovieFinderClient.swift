@@ -20,7 +20,7 @@ class MovieFinderClient {
   let responseQueue: DispatchQueue?
 
   static let shared = MovieFinderClient(baseURL: "https://imdb8.p.rapidapi.com/title/find",
-                                        httpClient: URLSessionHTTPClient(session: URLSession.shared),
+                                        httpClient: AlamofireHTTPClient(),
                                         secrets: Secrets(),
                                         responseQueue: .main)
 
