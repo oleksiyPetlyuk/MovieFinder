@@ -18,9 +18,12 @@ struct ServerResponse: Decodable {
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
 
-    let nullableMovies = try container.decode([OptionalObject<Movie>].self, forKey: .results)
-
-    self.results = nullableMovies.compactMap { $0.value }
+    if container.contains(.results) {
+      let nullableMovies = try container.decode([OptionalObject<Movie>].self, forKey: .results)
+      self.results = nullableMovies.compactMap { $0.value }
+    } else {
+      self.results = []
+    }
   }
 }
 

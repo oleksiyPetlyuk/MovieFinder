@@ -23,13 +23,11 @@ class MoviesViewController: UIViewController {
     }
   }
 
-  var networkClient: MovieFinderService = MovieFinderClient.shared
+  var apiClient: MovieFinderService = MovieFinderClient.shared
 
   var imageClient: ImageService = ImageClient.shared
 
   var viewModels: [MovieViewModel] = []
-
-  var dataTask: URLSessionDataTaskProtocol?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -65,28 +63,21 @@ class MoviesViewController: UIViewController {
   }
 
   func getData(for title: String) {
-    guard dataTask == nil else { return }
+    activityIndicator.startAnimating()
 
-    do {
-      activityIndicator.startAnimating()
+    self.apiClient.getMovies(title: title) { [weak self] result in
+      guard let self = self else { return }
 
-      dataTask = try networkClient.getMovies(title: title) { movies, error in
-        guard error == nil else {
-          self.activityIndicator.stopAnimating()
+      switch result {
+      case.failure(let error):
+        self.activityIndicator.stopAnimating()
+        self.showAlert(message: String(describing: error))
 
-          self.showAlert(message: String(describing: error!))
-
-          return
-        }
-
-        self.dataTask = nil
-        self.viewModels = movies?.map { MovieViewModel(movie: $0) } ?? []
+      case .success(let movies):
+        self.viewModels = movies.map { MovieViewModel(movie: $0) }
         self.tableView.reloadData()
         self.activityIndicator.stopAnimating()
       }
-    } catch {
-      activityIndicator.stopAnimating()
-      showAlert(message: String(describing: error))
     }
   }
 }

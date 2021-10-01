@@ -7,105 +7,66 @@
 
 import Foundation
 
-enum NetworkError: Error {
-  case noData
-  case clientError
-  case serverError
-  case noResponseError(error: URLError)
-  case invalidRequestUrl
-  case unknownError
-}
-
 protocol MovieFinderService {
-  func getMovies(title: String, completion: @escaping ([Movie]?, Error?) -> Void) throws -> URLSessionDataTaskProtocol
+  typealias Handler = (Result<[Movie], Error>) -> Void
+
+  func getMovies(title: String, completion: @escaping Handler)
 }
 
 class MovieFinderClient {
-
-  let baseURL: URL
-  let session: URLSessionProtocol
+  let baseURL: String
+  let httpClient: HTTPClientProtocol
+  let secrets: Secrets
   let responseQueue: DispatchQueue?
-  var apiKeys = (host: "imdb8.p.rapidapi.com", key: "c2c68d7704mshcde4a8424a2e81ap19db6ajsn042508dbd217")
 
-  static let shared = MovieFinderClient(baseURL: URL(string: "https://imdb8.p.rapidapi.com/title/find")!,
-                                        session: URLSession.shared,
+  static let shared = MovieFinderClient(baseURL: "https://imdb8.p.rapidapi.com/title/find",
+                                        httpClient: URLSessionHTTPClient(session: URLSession.shared),
+                                        secrets: Secrets(),
                                         responseQueue: .main)
 
-  init(baseURL: URL, session: URLSessionProtocol, responseQueue: DispatchQueue?) {
+  init(baseURL: String, httpClient: HTTPClientProtocol, secrets: Secrets, responseQueue: DispatchQueue?) {
     self.baseURL = baseURL
-    self.session = session
+    self.httpClient = httpClient
+    self.secrets = secrets
     self.responseQueue = responseQueue
   }
 }
 
 extension MovieFinderClient: MovieFinderService {
-  func getMovies(title: String, completion: @escaping ([Movie]?, Error?) -> Void) throws -> URLSessionDataTaskProtocol {
-    guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else {
-      throw NetworkError.invalidRequestUrl
-    }
-
-    var queryItems: [URLQueryItem] = []
-
-    ["q": title].forEach { queryItems.append(.init(name: $0.key, value: $0.value)) }
-
-    urlComponents.queryItems = queryItems
-
-    guard let url = urlComponents.url else {
-      throw NetworkError.invalidRequestUrl
-    }
-
-    var request = URLRequest(url: url)
-    request.httpMethod = "GET"
-    request.allHTTPHeaderFields = [
-      "x-rapidapi-host": apiKeys.host,
-      "x-rapidapi-key": apiKeys.key
+  func getMovies(title: String, completion: @escaping Handler) {
+    let headers = [
+      "x-rapidapi-host": secrets.apiHost,
+      "x-rapidapi-key": secrets.apiKey
     ]
 
-    let task = session.dataTask(with: request) { [weak self] data, response, error in
+    httpClient.get(baseURL, query: ["q": title], headers: headers) { [weak self] result in
       guard let self = self else { return }
 
-      guard let httpResponse = response as? HTTPURLResponse else {
-        if let error = error as? URLError {
-          self.dispatchResult(error: NetworkError.noResponseError(error: error), completion: completion)
-        } else {
-          self.dispatchResult(error: NetworkError.unknownError, completion: completion)
-        }
-
-        return
-      }
-
-      if httpResponse.statusCode >= 400 && httpResponse.statusCode < 500 {
-        self.dispatchResult(error: NetworkError.clientError, completion: completion)
-      } else if httpResponse.statusCode >= 500 && httpResponse.statusCode < 600 {
-        self.dispatchResult(error: NetworkError.serverError, completion: completion)
-      } else if let data = data, !data.isEmpty {
-        let decoder = JSONDecoder()
+      switch result {
+      case .failure(let error):
+        self.dispatchResult(result: .failure(error), completion: completion)
+      case .success(let data):
         do {
-          let serverResponse = try decoder.decode(ServerResponse.self, from: data)
+          let serverResponse = try JSONDecoder().decode(ServerResponse.self, from: data)
 
-          self.dispatchResult(models: serverResponse.results, completion: completion)
+          self.dispatchResult(result: .success(serverResponse.results), completion: completion)
         } catch {
-          self.dispatchResult(error: error, completion: completion)
+          self.dispatchResult(result: .failure(error), completion: completion)
         }
-      } else {
-        self.dispatchResult(error: NetworkError.noData, completion: completion)
       }
     }
-
-    task.resume()
-
-    return task
   }
 
-  private func dispatchResult<T, U: Error>(models: T? = nil, error: U? = nil, completion: @escaping (T?, U?) -> Void) {
+  private func dispatchResult<T: Decodable, U: Error>(result: Result<T, U>,
+                                                      completion: @escaping (Result<T, U>) -> Void) {
     guard let responseQueue = responseQueue else {
-      completion(models, error)
+      completion(result)
 
       return
     }
 
     responseQueue.async {
-      completion(models, error)
+      completion(result)
     }
   }
 }
